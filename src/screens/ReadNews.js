@@ -1,10 +1,8 @@
-import { View, Text, Image, TouchableOpacity, Share } from 'react-native'
+import { View, Text, Image, TouchableOpacity, Share, StyleSheet } from 'react-native'
 import React from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import Color from '../Shared/Color'
 import { Ionicons } from '@expo/vector-icons';
-//import * as Linking from 'expo-linking';
-//import * as WebBrowser from 'expo-web-browser';
 
 const ReadNews = () => {
 
@@ -18,9 +16,11 @@ const ReadNews = () => {
        })  
     }
 
+    const {actions, newsImage, newsDescription, newsSource, newsTitle} = styles
+
   return (
     <View style={{backgroundColor: 'white', flex: 1}}>
-         <View style={{marginTop: 10, marginBottom: 10, flexDirection: 'row', justifyContent: 'space-between'}}>
+         <View style={actions}>
             <TouchableOpacity onPress={()=>{navigation.goBack()}}>
                 <Ionicons name="arrow-back" size={24} color="black" />
             </TouchableOpacity>
@@ -28,15 +28,42 @@ const ReadNews = () => {
                 <Ionicons name="share-outline" size={24} color="black" />
             </TouchableOpacity>
          </View>
-         <Image source={{uri: news.urlToImage}} style={{height: 300, width: '100%', borderRadius: 15}}/>
-         <Text style={{marginTop: 10, fontSize: 22, fontWeight:'bold'}}>{news.title}</Text>
-         <Text style={{marginTop: 10, color: Color.primary, fontSize: 16}}>{news.source.name}</Text>
-         <Text style={{marginTop: 10, fontSize: 18, color: Color.gray, lineHeight: 30}}>{news.description}</Text>
-         <TouchableOpacity onPress={()=>{}}>
-            <Text style={{fontWeight: 'bold', marginTop: 10, color: Color.primary, fontSize: 16}}>Read More</Text>
-         </TouchableOpacity>
+         <Image source={{uri: news.urlToImage}} style={newsImage}/>
+         <Text style={newsTitle}>{news.title}</Text>
+         <Text style={newsSource}>{news.source.name}</Text>
+         <Text style={newsDescription}>{news.description}</Text>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+   actions:{
+      marginTop: 10,
+      marginBottom: 30, 
+      flexDirection: 'row', 
+      justifyContent: 'space-between'
+   },
+   newsImage:{
+      height: 300, 
+      width: '100%', 
+      borderRadius: 15
+   },
+   newsTitle:{
+      marginTop: 10, 
+      fontSize: 22, 
+      fontWeight: 'bold'
+   },
+   newsSource:{
+      marginTop: 10, 
+      color: Color.primary, 
+      fontSize: 16
+   },
+   newsDescription:{
+      marginTop: 20, 
+      fontSize: 18, 
+      color: Color.gray, 
+      lineHeight: 30
+   }
+})
 
 export default ReadNews

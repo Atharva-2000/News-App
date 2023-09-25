@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ActivityIndicator, ScrollView, Text, View } from 'react-native'
+import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native'
 import CategoryTextSlider from '../components/Home/CategoryTextSlider'
 import Color from '../Shared/Color'
 import { Ionicons } from '@expo/vector-icons';
@@ -29,17 +29,19 @@ const Home = () => {
       }
   }
 
+  const {appHeadingBox,appHeadingTitle,loadingBox} = styles
+
   return (
      <View style={{backgroundColor: 'white'}}>
          <View>
-            <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                  <Text style={{fontSize: 30, fontWeight: 'bold', color: Color.primary}}>FactCheck News</Text>
+            <View style={appHeadingBox}>
+                  <Text style={appHeadingTitle}>FactCheck News</Text>
                   <Ionicons name="notifications-outline" size={30} color="black" />
             </View>
             <CategoryTextSlider getTopheadline={getTopheadline}/>
             {
                loading ? (
-                  <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 50}}>
+                  <View style={loadingBox}>
                      <Text>Loading....</Text>
                      <ActivityIndicator size="large" />
                   </View>
@@ -54,5 +56,23 @@ const Home = () => {
      </View>
   )
 }
+
+const styles = StyleSheet.create({
+   appHeadingBox:{
+      flexDirection: 'row', 
+      alignItems: 'center', 
+      justifyContent: 'space-between'
+   },
+   appHeadingTitle:{
+      fontSize: 30, 
+      fontWeight: 'bold', 
+      color: Color.primary
+   },
+   loadingBox:{
+      justifyContent: 'center', 
+      alignItems: 'center',
+      marginTop: 50
+   }
+})
 
 export default Home

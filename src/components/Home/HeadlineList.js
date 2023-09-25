@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native'
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Color from '../../Shared/Color'
 import { useNavigation } from '@react-navigation/native'
 
@@ -7,21 +7,24 @@ const HeadlineList = ({newsList}) => {
 
   const navigation = useNavigation()
 
+  const {newsBox, newsHeadline, newsImage, newsSource, newsTitle, divider} = styles
+
   return (
     <View style={{marginTop: 8}}>
         <FlatList
+           showsVerticalScrollIndicator={false}
            data={newsList}
            renderItem={({item,index})=>{
               return(
                  <View>
-                    <TouchableOpacity style={{marginTop: 22, flexDirection: 'row'}} onPress={()=>{navigation.navigate('read-news', {news: item})}}>
-                        <Image source={{uri: item.urlToImage}} style={{width: 130, height: 130, borderRadius: 10}}/>
-                        <View style={{marginRight: 135, marginLeft: 15}}>
-                            <Text numberOfLines={4} style={{fontSize: 18, fontWeight: 'bold'}}>{item.title}</Text>
-                            <Text style={{color: Color.primary, marginTop: 6}}>{item?.source?.name}</Text>
+                    <TouchableOpacity style={newsBox} onPress={()=>{navigation.navigate('read-news', {news: item})}}>
+                        <Image source={{uri: item.urlToImage}} style={newsImage}/>
+                        <View style={newsHeadline}>
+                            <Text numberOfLines={4} style={newsTitle}>{item.title}</Text>
+                            <Text style={newsSource}>{item?.source?.name}</Text>
                         </View>
                     </TouchableOpacity>
-                    <View style={{height: 1, backgroundColor: Color.lightGray, marginTop: 13}}/>
+                    <View style={divider}/>
                  </View>
               )
            }}
@@ -29,5 +32,34 @@ const HeadlineList = ({newsList}) => {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+   newsBox:{
+      marginTop: 22, 
+      flexDirection: 'row'
+   },
+   newsImage:{
+      width: 130, 
+      height: 130, 
+      borderRadius: 10
+   },
+   newsHeadline:{
+      marginRight: 135, 
+      marginLeft: 15
+   },
+   newsTitle:{
+      fontSize: 18,
+      fontWeight: 'bold'
+   },
+   newsSource:{
+      color: Color.primary, 
+      marginTop: 6
+   },
+   divider:{
+      height: 1, 
+      backgroundColor: Color.lightGray,
+      marginTop: 13
+   }
+})
 
 export default HeadlineList
